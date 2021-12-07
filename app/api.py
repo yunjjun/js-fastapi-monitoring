@@ -2,7 +2,7 @@ from pathlib import Path
 import numpy as np
 from fastapi import FastAPI, Response, HTTPException, status
 from joblib import load
-from .schemas import Wine, Rating, ModelName, Version, feature_names
+from .schemas import Wine, Rating, feature_names
 from azureml.core import Workspace
 from azureml.core.model import Model
 
