@@ -23,8 +23,8 @@ def root():
 @app.post("/predict", response_model=Rating)
 def predict(response: Response, sample: Wine, model_name: ModelName, version: Version):
     sample_dict = sample.dict()
-    # model_name = model_name.strip("''")
-    # version = version.strip("''")
+    model_name = model_name.strip("''")
+    version = version.strip("''")
     features = np.array([sample_dict[f] for f in feature_names]).reshape(1, -1)
     model = Model(
         ws, 
