@@ -40,4 +40,4 @@ jobs:
       with:
         app-name: 'mlops-cd'
         images: 'mlopscd.azurecr.io/mlops-cd:${{ github.sha }}'
-        slot-name: 'mlops-cd-staging'
+        slot-name: 'staging'
