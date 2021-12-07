@@ -21,10 +21,8 @@ def root():
     return "Wine Quality Ratings !!"
 
 @app.post("/predict", response_model=Rating)
-def predict(response: Response, sample: Wine, model_name: ModelName, version: Version):
+def predict(response: Response, sample: Wine, model_name: str, version: int):
     sample_dict = sample.dict()
-    model_name = str(model_name)
-    version = str(version)
     features = np.array([sample_dict[f] for f in feature_names]).reshape(1, -1)
     model = Model(
         ws, 

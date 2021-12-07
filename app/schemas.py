@@ -48,15 +48,3 @@ class Rating(BaseModel):
         le=10,
         description="wine quality grade ranging from 0 (very bad) to 10 (excellent)",
     )
-    
-class ModelName(BaseModel):
-    model_name: str = Field(
-        ...,
-        description="model name",
-    )
-    
-class Version(BaseModel):
-    version: int = Field(
-        ...,
-        description="model version",
-    )
