@@ -22,17 +22,18 @@ def root():
 
 
 @app.post("/predict", response_model=Rating)
-def predict(response: Response, sample: Wine, model_name: ModelName, version: Version):
+# def predict(response: Response, sample: Wine, model_name: ModelName, version: Version):
+def predict(response: Response, sample: Wine):
     sample_dict = sample.dict()
     features = np.array([sample_dict[f] for f in feature_names]).reshape(1, -1)
     model = Model(
         ws, 
-        f"{model_name}_model", 
-        version=version)
+        f"wine_model", 
+        version=3)
     scaler = Model(
         ws, 
-        f"{model_name}_scaler", 
-        version=version
+        f"wine_scaler", 
+        version=3
     )
     features_scaled = scaler.transform(features)
     prediction = model.predict(features_scaled)[0]
