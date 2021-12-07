@@ -29,11 +29,11 @@ def predict(response: Response, sample: Wine):
     model = Model(
         ws, 
         f"wine_model", 
-        version=3)
+        version=4)
     scaler = Model(
         ws, 
         f"wine_scaler", 
-        version=3
+        version=4
     )
     model.download(target_dir="artifacts/", exist_ok= True)
     scaler.download(target_dir="artifacts/", exist_ok= True)
