@@ -15,15 +15,6 @@ app = FastAPI()
 ws = Workspace(subscription_id="0dfd6360-d4a6-4d90-b642-22bc52ee4a2b",
                resource_group="azure-mlops",
                workspace_name="ml-pipeline")
-model = Model(
-    ws, 
-    'wine_model', 
-    version=3)
-scaler = Model(
-    ws, 
-    'wine_scaler', 
-    version=3
-)
 
 @app.get("/")
 def root():
@@ -31,9 +22,18 @@ def root():
 
 
 @app.post("/predict", response_model=Rating)
-def predict(response: Response, sample: Wine):
+def predict(response: Response, sample: Wine, model_name: str, version: int):
     sample_dict = sample.dict()
     features = np.array([sample_dict[f] for f in feature_names]).reshape(1, -1)
+    model = Model(
+        ws, 
+        f"{model_name}_model", 
+        version=version)
+    scaler = Model(
+        ws, 
+        f"{model_name}_scaler", 
+        version=version
+    )
     features_scaled = scaler.transform(features)
     prediction = model.predict(features_scaled)[0]
     response.headers["X-model-score"] = str(prediction)
