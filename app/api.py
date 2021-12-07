@@ -18,7 +18,7 @@ ws = Workspace(subscription_id="0dfd6360-d4a6-4d90-b642-22bc52ee4a2b",
 
 @app.get("/")
 def root():
-    return "Wine Quality Ratings !!"
+    return "Wine Quality Ratings !!!"
 
 @app.post("/update_model")
 def update_model(model_name: str, version: int):
