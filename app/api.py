@@ -23,6 +23,8 @@ def root():
 @app.post("/predict", response_model=Rating)
 def predict(response: Response, sample: Wine, model_name: ModelName, version: Version):
     sample_dict = sample.dict()
+    # model_name = model_name.strip("''")
+    # version = version.strip("''")
     features = np.array([sample_dict[f] for f in feature_names]).reshape(1, -1)
     model = Model(
         ws, 
@@ -36,8 +38,8 @@ def predict(response: Response, sample: Wine, model_name: ModelName, version: Ve
     try:
         model.download(target_dir="artifacts/", exist_ok= True)
         scaler.download(target_dir="artifacts/", exist_ok= True)
-        scaler = load(ROOT_DIR / f"artifacts/{str(model_name)}_scaler.joblib")
-        model = load(ROOT_DIR / f"artifacts/{str(model_name)}_model.joblib")
+        scaler = load(ROOT_DIR / f'artifacts/{model_name}_scaler.joblib')
+        model = load(ROOT_DIR / f'artifacts/{model_name}_model.joblib')
         
         features_scaled = scaler.transform(features)
         prediction = model.predict(features_scaled)[0]
