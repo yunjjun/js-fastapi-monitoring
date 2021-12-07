@@ -9,7 +9,7 @@ from azureml.core.model import Model
 ROOT_DIR = Path(__file__).parent.parent
 
 app = FastAPI()
-scaler = load(ROOT_DIR / "artifacts/scaler.joblib")
+# scaler = load(ROOT_DIR / "artifacts/scaler.joblib")
 # model = load(ROOT_DIR / "artifacts/model.joblib")
 
 ws = Workspace(subscription_id="0dfd6360-d4a6-4d90-b642-22bc52ee4a2b",
@@ -30,6 +30,17 @@ def predict(response: Response, sample: Wine):
         ws, 
         f"wine_model", 
         version=3)
+    scaler = Model(
+        ws, 
+        f"wine_scaler", 
+        version=3
+    )
+    model.download(target_dir="artifacts/", exist_ok= True)
+    scaler.download(target_dir="artifacts/", exist_ok= True)
+    
+    scaler = load(ROOT_DIR / "artifacts/scaler.joblib")
+    model = load(ROOT_DIR / "artifacts/model.joblib")
+    
     features_scaled = scaler.transform(features)
     prediction = model.predict(features_scaled)[0]
     response.headers["X-model-score"] = str(prediction)
