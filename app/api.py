@@ -2,7 +2,7 @@ from pathlib import Path
 import numpy as np
 from fastapi import FastAPI, Response
 from joblib import load
-from .schemas import Wine, Rating, feature_names
+from .schemas import Wine, Rating, ModelName, Version, feature_names
 from azureml.core import Workspace
 from azureml.core.model import Model
 
@@ -22,7 +22,7 @@ def root():
 
 
 @app.post("/predict", response_model=Rating)
-def predict(response: Response, sample: Wine, model_name: str, version: int):
+def predict(response: Response, sample: Wine, model_name: ModelName, version: Version):
     sample_dict = sample.dict()
     features = np.array([sample_dict[f] for f in feature_names]).reshape(1, -1)
     model = Model(
