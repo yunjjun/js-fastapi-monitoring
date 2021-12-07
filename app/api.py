@@ -13,7 +13,7 @@ app = FastAPI()
 # scaler = load(ROOT_DIR / "artifacts/scaler.joblib")
 # model = load(ROOT_DIR / "artifacts/model.joblib")
 
-interactive_auth = InteractiveLoginAuthentication()
+interactive_auth = InteractiveLoginAuthentication(tenant_id = '<my-tenant-id>')
 ws = Workspace(subscription_id="0dfd6360-d4a6-4d90-b642-22bc52ee4a2b",
                resource_group="azure-mlops",
                workspace_name="ml-pipeline",
